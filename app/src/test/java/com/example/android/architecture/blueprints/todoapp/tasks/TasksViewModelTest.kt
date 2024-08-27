@@ -13,6 +13,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
 import org.hamcrest.CoreMatchers.`is`
+import org.junit.Before
 
 @Config(sdk = [30])
 @RunWith(AndroidJUnit4::class)
@@ -21,11 +22,15 @@ class TasksViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
+    private lateinit var tasksViewModel: TasksViewModel
+
+    @Before
+    fun setupViewModel() {
+        tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
+    }
+
     @Test
     fun addNewTask_setsNewTaskEvent() {
-
-        // Given a fresh TasksViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When adding a new task
         tasksViewModel.addNewTask()
@@ -38,9 +43,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterAllTasks_tasksAddViewVisible() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ALL_TASKS)
 
@@ -51,9 +53,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterAllTasks_currentFilteringLabel_AllTasks() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ALL_TASKS)
@@ -66,9 +65,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterAllTasks_noTasksLabel_NoTasksAll() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ALL_TASKS)
 
@@ -79,9 +75,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterAllTasks_noTaskIconRes_LogoNoFill() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ALL_TASKS)
@@ -94,9 +87,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterActiveTasks_tasksAddViewGone() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS)
 
@@ -107,9 +97,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterActiveTasks_currentFilteringLabel_ActiveTasks() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS)
@@ -122,9 +109,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterActiveTasks_noTasksLabel_NoTasksActive() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS)
 
@@ -135,9 +119,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterActiveTasks_noTaskIconRes_LogoNoFill() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.ACTIVE_TASKS)
@@ -150,9 +131,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterCompletedTasks_tasksAddViewGone() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS)
 
@@ -163,9 +141,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterCompletedTasks_currentFilteringLabel_CompletedTasks() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS)
@@ -178,9 +153,6 @@ class TasksViewModelTest {
     @Test
     fun setFilterCompletedTasks_noTasksLabel_NoTasksCompleted() {
 
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
-
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS)
 
@@ -191,9 +163,6 @@ class TasksViewModelTest {
 
     @Test
     fun setFilterCompletedTasks_noTaskIconRes_LogoNoFill() {
-
-        // Given a fresh ViewModel
-        val tasksViewModel = TasksViewModel(ApplicationProvider.getApplicationContext())
 
         // When the filter type is ALL_TASKS
         tasksViewModel.setFiltering(TasksFilterType.COMPLETED_TASKS)
