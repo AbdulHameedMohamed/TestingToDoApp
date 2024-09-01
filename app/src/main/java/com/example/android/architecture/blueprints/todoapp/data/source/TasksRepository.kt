@@ -31,5 +31,4 @@ interface TasksRepository {
 
     suspend fun deleteTask(taskId: String)
 
-    suspend fun getTaskWithId(id: String): Result<Task>
 }

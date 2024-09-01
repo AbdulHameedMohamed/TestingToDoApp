@@ -2,17 +2,21 @@
 package com.example.android.architecture.blueprints.todoapp.statistics
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
+import com.example.android.architecture.blueprints.todoapp.TodoApplication
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Error
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository
 import kotlinx.coroutines.launch
 
 class StatisticsViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val tasksRepository = DefaultTasksRepository.getRepository(application)
+    private val tasksRepository = (application as TodoApplication).taskRepository
 
     private val tasks: LiveData<Result<List<Task>>> = tasksRepository.observeTasks()
     private val _dataLoading = MutableLiveData<Boolean>(false)

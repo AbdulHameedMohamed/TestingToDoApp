@@ -1,23 +1,25 @@
 package com.example.android.architecture.blueprints.todoapp.tasks
 
-import android.app.Application
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.example.android.architecture.blueprints.todoapp.Event
 import com.example.android.architecture.blueprints.todoapp.R
 import com.example.android.architecture.blueprints.todoapp.data.Result
 import com.example.android.architecture.blueprints.todoapp.data.Result.Success
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import com.example.android.architecture.blueprints.todoapp.data.source.DefaultTasksRepository
-import com.example.android.architecture.blueprints.todoapp.data.source.TasksDataSource
+import com.example.android.architecture.blueprints.todoapp.data.source.TasksRepository
 import kotlinx.coroutines.launch
 
-class TasksViewModel(application: Application) : AndroidViewModel(application) {
+class TasksViewModel(private val tasksRepository: TasksRepository) : ViewModel() {
 
-    private val tasksRepository = DefaultTasksRepository.getRepository(application)
-
-    private val _forceUpdate = MutableLiveData<Boolean>(false)
+    private val _forceUpdate = MutableLiveData(false)
 
     private val _items: LiveData<List<Task>> = _forceUpdate.switchMap { forceUpdate ->
         if (forceUpdate) {
@@ -82,12 +84,14 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
                     R.drawable.logo_no_fill, true
                 )
             }
+
             TasksFilterType.ACTIVE_TASKS -> {
                 setFilter(
                     R.string.label_active, R.string.no_tasks_active,
                     R.drawable.ic_check_circle_96dp, false
                 )
             }
+
             TasksFilterType.COMPLETED_TASKS -> {
                 setFilter(
                     R.string.label_completed, R.string.no_tasks_completed,
@@ -169,22 +173,31 @@ class TasksViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private fun filterItems(tasks: List<Task>, filteringType: TasksFilterType): List<Task> {
-            val tasksToShow = ArrayList<Task>()
-            for (task in tasks) {
-                when (filteringType) {
-                    TasksFilterType.ALL_TASKS -> tasksToShow.add(task)
-                    TasksFilterType.ACTIVE_TASKS -> if (task.isActive) {
-                        tasksToShow.add(task)
-                    }
-                    TasksFilterType.COMPLETED_TASKS -> if (task.isCompleted) {
-                        tasksToShow.add(task)
-                    }
+        val tasksToShow = ArrayList<Task>()
+        for (task in tasks) {
+            when (filteringType) {
+                TasksFilterType.ALL_TASKS -> tasksToShow.add(task)
+                TasksFilterType.ACTIVE_TASKS -> if (task.isActive) {
+                    tasksToShow.add(task)
+                }
+
+                TasksFilterType.COMPLETED_TASKS -> if (task.isCompleted) {
+                    tasksToShow.add(task)
                 }
             }
-            return tasksToShow
         }
+        return tasksToShow
+    }
 
     fun refresh() {
         _forceUpdate.value = true
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+class TasksViewModelFactory (
+    private val tasksRepository: TasksRepository
+) : ViewModelProvider.NewInstanceFactory() {
+    override fun <T : ViewModel> create(modelClass: Class<T>) =
+        (TasksViewModel(tasksRepository) as T)
 }

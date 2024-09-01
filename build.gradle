@@ -33,6 +33,7 @@ ext {
     androidXVersion = '1.0.0'
     androidXTestCoreVersion = '1.3.0'
     androidXTestExtKotlinRunnerVersion = '1.1.3'
+    fragmentKtxVersion = '1.4.0'
     androidXTestRulesVersion = '1.2.0'
     androidXAnnotations = '1.3.0'
     appCompatVersion = '1.4.0'
