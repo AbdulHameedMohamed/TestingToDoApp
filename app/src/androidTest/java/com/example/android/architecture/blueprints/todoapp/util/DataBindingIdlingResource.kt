@@ -10,13 +10,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.IdlingResource
 import java.util.UUID
 
-/**
- * An espresso idling resource implementation that reports idle status for all data binding
- * layouts. Data Binding uses a mechanism to post messages which Espresso doesn't track yet.
- *
- * Since this application only uses fragments, the resource only checks the fragments and their
- * children instead of the whole view tree.
- */
 class DataBindingIdlingResource : IdlingResource {
     private val idlingCallbacks = mutableListOf<IdlingResource.ResourceCallback>()
     private val id = UUID.randomUUID().toString()
