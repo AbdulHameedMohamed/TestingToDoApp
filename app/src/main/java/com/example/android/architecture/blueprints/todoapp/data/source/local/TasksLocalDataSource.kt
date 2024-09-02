@@ -29,11 +29,11 @@ class TasksLocalDataSource internal constructor(
     }
 
     override suspend fun refreshTask(taskId: String) {
-        //NO-OP
+        throw NotImplementedError("This Method Is Not Supported in TasksLocalDataSource")
     }
 
     override suspend fun refreshTasks() {
-        //NO-OP
+        throw NotImplementedError("This Method Is Not Supported in TasksLocalDataSource")
     }
 
     override suspend fun getTasks(): Result<List<Task>> = withContext(ioDispatcher) {
