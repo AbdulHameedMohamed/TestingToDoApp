@@ -1,7 +1,7 @@
 package com.example.android.architecture.blueprints.todoapp.statistics
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.android.architecture.blueprints.todoapp.MainCoroutineRule
+import com.example.android.architecture.blueprints.todoapp.utils.MainCoroutineRule
 import com.example.android.architecture.blueprints.todoapp.data.source.FakeTestRepository
 import com.example.android.architecture.blueprints.todoapp.utils.getOrAwaitValue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
